@@ -64,7 +64,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -72,10 +71,13 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_CEB1C2673DFC439783F0C1DB048FEFA1 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9452104FB1784452BE5683CCF4B03970 }}
 
+      # Tambahkan delay disini
+      - name: Wait to avoid SCM conflict
+        run: sleep 30
+      
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'praktikum2'
           slot-name: 'Production'
-          
